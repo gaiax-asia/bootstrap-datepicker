@@ -20,6 +20,8 @@
  * limitations under the License.
  * ========================================================= */
 
+// Forked to gaiax-asia to provide timezone support
+
 (function($, undefined){
 
 	var $window = $(window);
@@ -702,6 +704,10 @@
 				year = this.viewDate.getUTCFullYear(),
 				month = this.viewDate.getUTCMonth(),
 				today = new Date();
+			// When timezone offset from UTC is specified. It just adjusts local time to be same as the time in the timezone of the specified offset
+			if (this.o.utc_offset) {
+				today = new Date(today.getTime() + (today.getTimezoneOffset() + this.o.utc_offset) * 60 * 1000);
+			}
 			if (date.getUTCFullYear() < year || (date.getUTCFullYear() === year && date.getUTCMonth() < month)){
 				cls.push('old');
 			}
